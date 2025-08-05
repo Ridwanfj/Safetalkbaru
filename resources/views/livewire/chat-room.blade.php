@@ -14,21 +14,23 @@
         @forelse ($messages as $msg)
             <div class="flex items-end space-x-2 @if($msg->sender_id == Auth::id()) flex-row-reverse space-x-reverse @endif">
                 
-                {{-- Foto Profil Pengirim --}}
+           
+
                 <div>
-                    @if ($msg->sender->role === 'psychologist' && $msg->sender->psychologistProfile?->profile_image_path)
-                        <img src="{{ asset('storage/' . $msg->sender->psychologistProfile->profile_image_path) }}" alt="{{ $msg->sender->name }}" class="w-8 h-8 rounded-full object-cover">
-                    @else
-                        {{-- Avatar Default (inisial nama) --}}
-                        <div class="w-8 h-8 rounded-full bg-slate-600 flex items-center justify-center text-white font-bold text-sm">
-                            {{ strtoupper(substr($msg->sender->name, 0, 1)) }}
-                        </div>
-                    @endif
+                 @if ($msg->sender->role === 'psikolog' && $msg->sender->psychologistProfile?->profile_image_path)
+                    
+                     <img src="{{ asset('storage/' . $msg->sender->psychologistProfile->profile_image_path) }}" alt="{{ $msg->sender->name }}" class="w-8 h-8 rounded-full object-cover">
+                @else
+                
+                <div class="w-8 h-8 rounded-full bg-slate-600 flex items-center justify-center text-white font-bold text-sm">
+                {{ strtoupper(substr($msg->sender->name, 0, 1)) }}
+                </div>
+                 @endif
                 </div>
 
                 {{-- Gelembung Chat --}}
                 <div class="max-w-xs md:max-w-lg rounded-lg p-3 @if($msg->sender_id == Auth::id()) bg-cyan-600 text-white @else bg-slate-700 text-slate-200 @endif">
-                    {{-- Tampilkan nama pengirim jika bukan Anda --}}
+                  
                     @if($msg->sender_id != Auth::id())
                     <p class="text-xs font-bold text-cyan-300 mb-1">{{ $msg->sender->name }}</p>
                     @endif

@@ -31,21 +31,21 @@ class ChatRoom extends Component
     }
 
     public function sendMessage()
-    {
-        $this->validate(['message' => 'required|string|max:2000']);
+{
+    $this->validate(['message' => 'required|string|max:2000']);
 
-        $receiverId = ($this->consultation->user_id === Auth::id()) ? $this->consultation->psychologist_id : $this->consultation->user_id;
+    $receiverId = ($this->consultation->user_id === Auth::id()) ? $this->consultation->psychologist_id : $this->consultation->user_id;
 
-        $this->consultation->chats()->create([
-            'sender_id' => Auth::id(),
-            'receiver_id' => $receiverId,
-            'message' => $this->message,
-        ]);
-        
-        // Reset state di backend
-        $this->reset('message');
+    $this->consultation->chats()->create([
+        'sender_id' => Auth::id(),
+        'receiver_id' => $receiverId,
+        'message' => $this->message,
+    ]);
+    
+    // Reset state di backend
+    $this->reset('message');
 
-        // Pancarkan event untuk ditangkap oleh JavaScript di frontend
-        $this->dispatch('messageSent');
-    }
+    
+    $this->dispatch('message-sent'); 
+}
 }
